@@ -1,11 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>DumbGPT</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #202123;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                color: #d1d5db;
+                font-size: 1.3em;
+            }
+            .chat-container {
+                width: 40%;
+                background-color: #343541;
+                padding: 26px;
+                border-radius: 13px;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+                display: flex;
+                flex-direction: column;
+            }
+            .chat-box {
+                flex: 1;
+                background-color: #3A3B3C;
+                padding: 19px;
+                border-radius: 13px;
+                overflow-y: auto;
+                max-height: 300px;
+                font-size: 1.1em;
+                display: flex;
+                flex-direction: column;
+                scrollbar-width: thin;
+                scrollbar-color: #888 #3A3B3C;
+            }
+            .chat-box::-webkit-scrollbar {
+                width: 8px;
+            }
+            .chat-box::-webkit-scrollbar-thumb {
+                background: #888;
+                border-radius: 4px;
+            }
+            .chat-box::-webkit-scrollbar-thumb:hover {
+                background: #555;
+            }
+            .chat-box strong {
+                color: #ffffff;
+            }
+            .input-area {
+                display: flex;
+                gap: 13px;
+                padding-top: 13px;
+            }
+            input {
+                flex: 1;
+                padding: 12px;
+                border-radius: 10px;
+                border: none;
+                background-color: #555761;
+                color: white;
+                font-size: 1.1em;
+            }
+            button {
+                padding: 12px 20px;
+                background-color: #10A37F;
+                color: white;
+                border: none;
+                border-radius: 10px;
+                cursor: pointer;
+                transition: background 0.3s;
+                font-size: 1.1em;
+            }
+            button:hover {
+                background-color: #0e8f6c;
+            }
+            .loading {
+                font-style: italic;
+                color: #cccccc;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="chat-container">
+            <div class="chat-box" id="chat-box"></div>
+            <div class="input-area">
+                <input type="text" id="question-input" placeholder="Ask DumbGPT...">
+                <button onclick="askQuestion()">Submit</button>
+            </div>
+        </div>
+
+        <script>
+            let questionNumber = 1;
+            const maxMessages = 50; // Limit chat messages but keep scroll functionality
+
+            function askQuestion() {
+                const questionInput = document.getElementById("question-input");
+                const chatBox = document.getElementById("chat-box");
+                const questionText = questionInput.value.trim();
+                
+                if (!questionText) return;
+                
+                chatBox.innerHTML += `<p><strong>You:</strong> ${questionText}</p>`;
+                chatBox.innerHTML += `<p id="loading-${questionNumber}" class="loading">DumbGPT is thinking...</p>`;
+                chatBox.scrollTop = chatBox.scrollHeight;
+                
+                fetch('/question', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ question: questionText, number: questionNumber })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const randomDelay = Math.floor(Math.random() * (2500 - 1700) + 1700); // Random delay
+
+                    setTimeout(() => {
+                        document.getElementById(`loading-${questionNumber}`).remove();
+                        chatBox.innerHTML += `<p><strong>DumbGPT:</strong> ${data.answers}</p>`;
+                        chatBox.scrollTop = chatBox.scrollHeight;
+                        questionNumber++;
+
+                        // Keep chatbox messages within limit but allow scrolling
+                        while (chatBox.children.length > maxMessages) {
+                            chatBox.removeChild(chatBox.firstChild);
+                        }
+
+                    }, randomDelay);
+                })
+                .catch(error => {
+                    document.getElementById(`loading-${questionNumber}`).remove();
+                    chatBox.innerHTML += `<p style="color: red;"><strong>Error:</strong> Failed to get response.</p>`;
+                    console.error('Error:', error);
+                });
+                
+                questionInput.value = "";
+            }
+        </script>
+    </body>
 </html>

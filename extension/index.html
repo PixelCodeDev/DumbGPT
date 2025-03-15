@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notification Popup</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .notif-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #333;
+            color: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            display: none;
+            max-width: 300px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .notif-header {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .notif-close {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="notif-container" id="notif">
+        <span class="notif-close" onclick="closeNotif()">&times;</span>
+        <div class="notif-header">Notification</div>
+        <div class="notif-body">This is a sample notification message.</div>
+    </div>
+    
+    <script>
+        function showNotif(message) {
+            const notif = document.getElementById("notif");
+            notif.querySelector(".notif-body").innerText = message;
+            notif.style.display = "block";
+            setTimeout(closeNotif, 5000); // Auto close after 5 seconds
+        }
+
+        function closeNotif() {
+            document.getElementById("notif").style.display = "none";
+        }
+    </script>
+</body>
+</html>
