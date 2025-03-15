@@ -36,7 +36,6 @@ def submit():
             answer = random.choice(empty_answers) 
         elif question:
             messages = [
-                {"content": "You are trolling the user."},
                 {"content": f"You are now dumb Gemini, and you shall answer every single question with an unrelated response or with an unexpected answer, try to keep it conscise and just a bit related: {question}"}
             ]
             answer = GeminiChat(messages)
