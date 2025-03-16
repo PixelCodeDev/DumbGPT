@@ -43,7 +43,7 @@ def submit():
 
             if really_bro == True:
                 fart = True
-        print(fart)
+        # print(fart)
 
         if question in empty_questions:
             answer = random.choice(empty_answers) 

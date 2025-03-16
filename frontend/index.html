@@ -14,9 +14,11 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            height: 100vh;
+            justify-content: center;
+            min-height: 100vh;
             color: #333;
             font-size: 1.2em;
+            text-align: center;
         }
 
         .title-container {
@@ -30,12 +32,11 @@
         }
 
         .content {
-            flex: 1;
             display: flex;
             justify-content: center;
             align-items: center;
             width: 100%;
-            padding-bottom: 100px;
+            flex-direction: column;
         }
 
         .chat-container {
@@ -105,20 +106,52 @@
             padding: 10px 0;
             font-size: 0.9em;
             color: #666;
-            position: absolute;
-            bottom: 5px;
+            margin-top: 20px;
         }
 
         @media (max-width: 600px) {
             .input-area {
                 flex-direction: column;
             }
+
             button {
                 width: 100%;
+                font-size: 1em;
             }
+
             .title-container {
+                display: flex;
                 flex-direction: column;
-                text-align: center;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+                margin-top: 20px;
+            }
+
+            .title-container img {
+                max-width: 100%;
+                height: auto;
+            }
+
+            .chat-container {
+            width: 90%;
+            max-width: 580px;
+            background-color: #f0f0f5;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+
+            .chat-container {
+                width: 95%;
+            }
+
+            #mode-text {
+                font-size: 1em;
+                padding: 6px 12px;
             }
         }
 
@@ -142,7 +175,87 @@
             border: 2px solid black;
             display: none;
         }
+        
+        .toggle-switch {
+        position: relative;
+        display: inline-block;
+        width: 40px;
+        height: 24px;
+        margin: 10px;
+        }
 
+        .toggle-switch .toggle-input {
+        display: none;
+        }
+
+        .toggle-switch .toggle-label {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 40px;
+        height: 24px;
+        background-color: #2196F3;
+        border-radius: 34px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        }
+
+        .toggle-switch .toggle-label::before {
+        content: "";
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        top: 2px;
+        left: 2px;
+        background-color: #fff;
+        box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
+        transition: transform 0.3s;
+        }
+
+        .toggle-switch .toggle-input:checked + .toggle-label {
+        background-color: #4CAF50;
+        }
+
+        .toggle-switch .toggle-input:checked + .toggle-label::before {
+        transform: translateX(16px);
+        }
+
+        .toggle-switch.light .toggle-label {
+        background-color: #BEBEBE;
+        }
+
+        .toggle-switch.light .toggle-input:checked + .toggle-label {
+        background-color: #9B9B9B;
+        }
+
+        .toggle-switch.light .toggle-input:checked + .toggle-label::before {
+        transform: translateX(6px);
+        }
+
+        .toggle-switch.dark .toggle-label {
+        background-color: #4B4B4B;
+        }
+
+        .toggle-switch.dark .toggle-input:checked + .toggle-label {
+        background-color: #717171;
+        }
+
+        .toggle-switch.dark .toggle-input:checked + .toggle-label::before {
+        transform: translateX(16px);
+        }
+
+        #mode-text {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: rgb(39, 39, 39);
+            background-color: rgba(0, 0, 255, 0);
+            padding: 8px 15px;
+            border-radius: 12px;
+            transition: background-color 0.3s, font-size 0.3s;
+            text-align: center;
+            display: inline-block;
+        }
     </style>
 </head>
 <body>
@@ -165,24 +278,35 @@
                 <button onclick="askQuestion()">Submit</button>
             </div>
 
-            <div class="mode-container" style="margin-top: 20px; display: flex; justify-content: center;">
-                <button onclick="toggleMode()" id="mode-toggle" style="background-color: blue;">Normal Mode</button>
+            <div class="mode-container" style="margin-top: 20px; display: flex; align-items: center; gap: 10px; justify-content: center;">
+                <span id="mode-text">Brainrot Mode</span>
+                
+                <div class="toggle-switch" style="transform: scale(1.3);">
+                    <input class="toggle-input" id="toggle" type="checkbox" onchange="toggleMode()">
+                    <label class="toggle-label" for="toggle"></label>
+                </div>
             </div>
+            
         </div>
     </div>
     
     <div class="video-container left-video">
-        <video loop autoplay muted playsinline>
+        <!-- <video loop autoplay muted playsinline>
             <source src="https://dumbgpt.netlify.app/assets/subway_gameplay.mp4" type="video/mp4">
             Your browser does not support the video tag.
-        </video>
+        </video> -->
+
+        <video loop autoplay muted src="https://dumbgpt.netlify.app/assets/subway_gameplay.mp4" id="left-video" style="display: none;"></video>
     </div>
     
     <div class="video-container right-video">
-        <video loop autoplay muted playsinline>
+        <!-- <video loop autoplay muted playsinline>
             <source src="https://dumbgpt.netlify.app/assets/subway_gameplay.mp4" type="video/mp4">
             Your browser does not support the video tag.
-        </video>
+        </video> -->
+
+        <video loop autoplay muted src="https://dumbgpt.netlify.app/assets/subway_gameplay.mp4" id="right-video" style="display: none;"></video>
+
     </div>
     
     <div class="popup" id="popup">
@@ -190,10 +314,8 @@
     </div>
 
 
-
-
     <p class="disclaimer">
-        Never expect anything useful out of this AI's messages, he's just    dumb.
+        Never expect anything useful out of this AI's messages, he's just dumb.
     </p>
 
     <script>
@@ -226,12 +348,39 @@
         let lang_mode = "normal";
 
         function toggleMode() {
-            const modeButton = document.getElementById("mode-toggle");
-            lang_mode = lang_mode === "brainrot" ? "normal" : "brainrot";
+            // const modeText = document.getElementById("mode-text");
+            const toggle = document.getElementById("toggle");
+            const questionInput = document.getElementById("question-input");
+            const body = document.body;
+            const chatContainer = document.querySelector(".chat-container");
+            const inputField = document.querySelector("input");
+            const modeText = document.getElementById("mode-text");
+            const titleLogo = document.getElementById("title_logo");
 
-            modeButton.textContent = lang_mode === "brainrot" ? "Brainrot Mode" : "Normal Mode";
-            modeButton.style.backgroundColor = lang_mode === "brainrot" ? "green" : "blue";
+            lang_mode = toggle.checked ? "brainrot" : "normal";
+
+            // modeText.textContent = lang_mode === "brainrot" ? "Brainrot Mode" : "Normal Mode";
+            // modeText.style.backgroundColor = lang_mode === "brainrot" ? "green" : "blue";
+
+            questionInput.placeholder = lang_mode === "brainrot" ? "Ask BrainrotGPT... " : "Ask DumbGPT... ";
+            
+            if (toggle.checked) {
+                body.style.backgroundColor = "#2c2c2c";
+                body.style.color = "#ddd";
+                chatContainer.style.backgroundColor = "#3a3a3a";
+                inputField.style.backgroundColor = "#444";
+                inputField.style.color = "#ddd";
+                titleLogo.src = "https://dumbgpt.netlify.app/assets/DumbGPT_logo4.png";
+            } else {
+                body.style.backgroundColor = "#ffffff";
+                body.style.color = "#333";
+                chatContainer.style.backgroundColor = "#f0f0f5";
+                inputField.style.backgroundColor = "#ffffff";
+                inputField.style.color = "#333";
+                titleLogo.src = "https://dumbgpt.netlify.app/assets/DumbGPT_logo3.png";
+            }
         }
+
 
         function askQuestion() {
             const questionInput = document.getElementById("question-input");
@@ -272,7 +421,7 @@
                 }, randomDelay);
 
                 if (lang_mode === 'brainrot') {
-                startBrainrotEffects();
+                    startBrainrotEffects();
                 } else {
                     stopBrainrotEffects();
                 }
