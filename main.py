@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, jsonify
 import random
 import google.generativeai as genai
 
-api_key = "AIzaSyCOQ7lBaZb5iV_Ycvil9xqQC26-Vb_KHmg"
+api_key = "NU UHHH"
 genai.configure(api_key=api_key)
 
 msg_type = {
@@ -56,3 +56,6 @@ def submit():
     print('Answer: ' + answer)
     print('Mode: ' + mode)
     return jsonify(success=True, answers=answer, farts=fart)
+
+if __name__ == '__main__':
+    app.run(debug=True)
