@@ -514,7 +514,7 @@
                     }
                 }, randomDelay);
 
-                if (lang_mode === 'brainrot') {
+                if (lang_mode === 'brainrot') { // not working rn :(
                     startBrainrotEffects();
                 } else {
                     stopBrainrotEffects();
@@ -532,15 +532,22 @@
         function startBrainrotEffects() {
             function showPopup() {
                 if (lang_mode === "normal") return;
-                console.log('Popup opened!')
-                const popup = document.getElementById("popup");
-                popup.style.display = "block";
-                popup.style.top = Math.random() * (window.innerHeight - 100) + "px";
-                popup.style.left = Math.random() * (window.innerWidth - 100) + "px";
-                popup.style.transform = `rotate(${Math.random() * 360}deg)`;
-                document.getElementById("popup-image").src = "http://dumbgpt.netlify.app/assets/brainrot/"+popupImages[Math.floor(Math.random() * popupImages.length)];
+                console.log('Popup opened!');
+
+                const originalPopup = document.getElementById("popup");
+                const clonedPopup = originalPopup.cloneNode(true);
+                clonedPopup.style.display = "block";
+                clonedPopup.style.top = Math.random() * (window.innerHeight - 100) + "px";
+                clonedPopup.style.left = Math.random() * (window.innerWidth - 100) + "px";
+                clonedPopup.style.transform = `rotate(${Math.random() * 360}deg)`;
+
+                clonedPopup.querySelector("#popup-image").src = "http://dumbgpt.netlify.app/assets/brainrot/" + popupImages[Math.floor(Math.random() * popupImages.length)];
+
+                document.body.appendChild(clonedPopup);
+
                 new Audio("https://cdn.freesound.org/previews/791/791346_16995461-lq.mp3").play();
             }
+
 
             function playRandomSound() {
                 if (lang_mode === "normal") return;
