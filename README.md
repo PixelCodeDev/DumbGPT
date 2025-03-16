@@ -1,6 +1,6 @@
 # DumbGPT - The stupid AI chatbot
 
-DumbGPT is the ultimate AI chatbot that does everything *except* answer your questions correctly. Based on Google's Gemini, this AI takes absurdity to the next level with its chaotic and nonsensical responses. And if that's not enough, **Brainrot Mode** cranks up the nonsense to pure, incomprehensible madness. 💀
+DumbGPT is the ultimate AI chatbot that does everything *except* answer your questions correctly. Based on Google's Gemini, this AI takes absurdity to the next level with its chaotic answers. And if that's not enough, **Brainrot Mode** cranks up the nonsense to literal brain melting 💀. 
 
 ---
 
@@ -8,11 +8,11 @@ DumbGPT is the ultimate AI chatbot that does everything *except* answer your que
 
 ✅ **Dumb Responses** – Ask a question, get a completely unrelated answer.
 
-🧠 **Brainrot Mode** – Activating this mode will make DumbGPT generate responses with absolute brainrot energy. Expect internet jargon, absurdist humor, and total chaos.
+🧠 **Brainrot Mode** – Activating this mode will make DumbGPT generate responses with absolute brainrot energy.
 
-⚠️ **Brainrot Pop-ups** – Surprise pop-ups that remind you that your sanity is at risk.
+⚠️ **Brainrot Pop-ups** – Well not really we havent finished it 😢.
 
-🤖 **Gemini-Powered** – Built on Google's Gemini AI, but with all intelligence removed for maximum dumbness.
+🤖 **Gemini-Powered** – Built on Google's Gemini AI, but with a little twist 😉.
 
 ---
 
@@ -28,11 +28,15 @@ Navigate to the project directory:
 ```
 Install dependencies:
 ```bash
- npm install
+ pip install flask
 ```
 Run the project:
 ```bash
- npm start
+ python main.py
+```
+Open the webpage
+```
+type [1](http://127.0.0.1:5000/) on your browser of choice.
 ```
 
 ---
@@ -40,13 +44,8 @@ Run the project:
 ## Usage 🚀
 
 1. **Ask a question** – Expect an unrelated or nonsensical answer.
-2. **Enable Brainrot Mode** – Type `!brainrot` to enable absolute madness.
-3. **Enjoy the chaos** – Just sit back and let DumbGPT ruin your day. 💀
-
----
-
-## Contributing 🤝
-Pull requests are welcome, but only if they make the AI *dumber*. Smarter features will be rejected on sight.
+2. **Enable Brainrot Mode** – By simply pressing the brainrot toggle.
+3. **Enjoy the chaos** – Just sit back and let DumbGPT do its job:)
 
 ---
 
@@ -55,5 +54,5 @@ This project is open-source and available under the MIT License.
 
 ---
 
-🚀 **Get ready to experience AI like never before—because it makes zero sense.**
+**Get ready to find some crazy stuff 😭.**
 
