@@ -54,7 +54,7 @@
             padding: 15px;
             border-radius: 10px;
             overflow-y: auto;
-            max-height: 400px;
+            max-height: 500px;
             font-size: 1em;
             display: none;
             flex-direction: column;
@@ -125,7 +125,7 @@
 <body>
 
     <div class="title-container">
-        <img id="title_logo" src="https://dumbgpt.netlify.app/assets/DumbGPT_logo2.png" alt="DumbGPT Logo" height="230px" width="auto">
+        <img id="title_logo" src="https://dumbgpt.netlify.app/assets/DumbGPT_logo3.png" alt="DumbGPT Logo" height="240px" width="auto">
         <img src="https://dumbgpt.netlify.app/assets/DumbGPT_title.png" alt="DumbGPT Title" height="150px" width="auto">
     </div>
 
@@ -141,8 +141,14 @@
                 <input type="text" id="question-input" placeholder="Ask DumbGPT..." onkeypress="handleKeyPress(event)">
                 <button onclick="askQuestion()">Submit</button>
             </div>
+
+            <div class="mode-container" style="margin-top: 20px; display: flex; justify-content: center;">
+                <button onclick="toggleMode()" id="mode-toggle" style="background-color: green;">Brainrot Mode</button>
+            </div>
         </div>
     </div>
+
+
 
     <p class="disclaimer">
         Never expect anything useful out of this AI's messages, he's really dumb.
@@ -151,6 +157,16 @@
     <script>
         let questionNumber = 1;
         const maxMessages = 50;
+
+        let lang_mode = "brainrot";
+
+        function toggleMode() {
+            const modeButton = document.getElementById("mode-toggle");
+            lang_mode = lang_mode === "brainrot" ? "normal" : "brainrot";
+
+            modeButton.textContent = lang_mode === "brainrot" ? "Brainrot Mode" : "Normal Mode";
+            modeButton.style.backgroundColor = lang_mode === "brainrot" ? "green" : "blue";
+        }
 
         function askQuestion() {
             const questionInput = document.getElementById("question-input");
@@ -167,7 +183,7 @@
             fetch('/question', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ question: questionText, number: questionNumber })
+                body: JSON.stringify({ question: questionText, number: questionNumber, mode: lang_mode })
             })
             .then(response => response.json())
             .then(data => {
