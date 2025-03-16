@@ -417,6 +417,9 @@
                 lang_mode = 'brainrot';
 
                 if (hasBrainrotted === false) {
+                    let menu_music = new Audio('');
+                    menu_music.play()
+
                     hasBrainrotted = true;
                     showBrainrotOverlay();
                 }
@@ -450,8 +453,10 @@
     function showBrainrotOverlay() {
         const overlay = document.getElementById("brainrot-overlay");
         const skipButton = document.getElementById("skip-button");
+        const ad_vid = document.getElementById('brainrot-video');
 
         overlay.style.display = "flex";
+        ad_vid.play()
         setTimeout(() => {
             skipButton.disabled = false;
             skipButton.classList.add("active");
