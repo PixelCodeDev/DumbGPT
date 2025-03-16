@@ -13,7 +13,6 @@
             padding: 0;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
             height: 100vh;
             color: #333;
@@ -26,13 +25,21 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            margin-bottom: 20px;
+            margin-top: 20px;
             flex-wrap: wrap;
+        }
+
+        .content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
         }
 
         .chat-container {
             width: 90%;
-            max-width: 600px;
+            max-width: 580px;
             background-color: #f0f0f5;
             padding: 20px;
             border-radius: 10px;
@@ -49,7 +56,7 @@
             overflow-y: auto;
             max-height: 400px;
             font-size: 1em;
-            display: flex;
+            display: none;
             flex-direction: column;
             border: 1px solid #ddd;
         }
@@ -73,7 +80,7 @@
 
         button {
             padding: 12px 18px;
-            background-color: #0084ff;
+            background-color: #5574ff;
             color: white;
             border: none;
             border-radius: 8px;
@@ -83,12 +90,22 @@
         }
 
         button:hover {
-            background-color: #0072e5;
+            background-color: #0072e58a;
         }
 
         .loading {
             font-style: italic;
             color: #666;
+        }
+
+        .disclaimer {
+            width: 100%;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 0.9em;
+            color: #666;
+            position: absolute;
+            bottom: 5px;
         }
 
         @media (max-width: 600px) {
@@ -108,17 +125,28 @@
 <body>
 
     <div class="title-container">
-        <img id="title_logo" src="https://dumbgpt.netlify.app/assets/DumbGPT_logo.png" alt="DumbGPT Logo" height=250px, width=auto>
-        <img src="https://dumbgpt.netlify.app/assets/DumbGPT_title2.png" alt="DumbGPT Title" height=150px, width=auto>
+        <img id="title_logo" src="https://dumbgpt.netlify.app/assets/DumbGPT_logo.png" alt="DumbGPT Logo" height="230px" width="auto">
+        <img src="https://dumbgpt.netlify.app/assets/DumbGPT_title.png" alt="DumbGPT Title" height="150px" width="auto">
     </div>
 
-    <div class="chat-container">
-        <div class="chat-box" id="chat-box"></div>
-        <div class="input-area">
-            <input type="text" id="question-input" placeholder="Ask DumbGPT..." onkeypress="handleKeyPress(event)">
-            <button onclick="askQuestion()">Submit</button>
+    <div class="greeting-container">
+        <h2 id="greeting_text" style="padding-top: 10px;">helo wat can i help u with. .. .</h2>
+    </div>
+
+    <div class="content">
+        <div class="chat-container">
+            <div class="chat-box" id="chat-box"></div>
+
+            <div class="input-area">
+                <input type="text" id="question-input" placeholder="Ask DumbGPT..." onkeypress="handleKeyPress(event)">
+                <button onclick="askQuestion()">Submit</button>
+            </div>
         </div>
     </div>
+
+    <p class="disclaimer">
+        Never expect anything useful out of this AI's messages, he's really dumb.
+    </p>
 
     <script>
         let questionNumber = 1;
@@ -130,6 +158,7 @@
             const questionText = questionInput.value.trim();
             
             if (!questionText) return;
+            chatBox.style.display = "flex";
             
             chatBox.innerHTML += `<p><strong>You:</strong> ${questionText}</p>`;
             chatBox.innerHTML += `<p id="loading-${questionNumber}" class="loading">DumbGPT is thinking...</p>`;

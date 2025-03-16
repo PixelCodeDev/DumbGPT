@@ -6,8 +6,8 @@ api_key = "AIzaSyCOQ7lBaZb5iV_Ycvil9xqQC26-Vb_KHmg"
 genai.configure(api_key=api_key)
 
 msg_type = {
-    'dumb': "your the dumb AI, give off the weirdest answers to the questions, should probably be even unrelated to the question's topic, and be creative with it AND DONT MAKE THE ANSWERS LONG!!!",
-    'brainrot': "your the brainrot AI, talk only in brainrot using 2024-2025 tiktok/instagram brainrot words, try to make the answer somewhat short and less 'slay' and less words"
+    'dumb': "your the dumb AI, talk in a human way, give off the weirdest answers to the questions, should probably be even unrelated to the question's topic, and be creative with it AND DONT MAKE THE ANSWERS LONG!!!",
+    'brainrot': "your the brainrot AI, talk in a human way, talk only in brainrot using 2024-2025 tiktok/instagram brainrot words, try to make the answer somewhat short and less 'slay' and less words"
 }
 
 def gemini(messages, temperature=0.7, max_tokens=250):
@@ -33,6 +33,7 @@ def submit():
     data = request.get_json()
     question = data.get("question")
     num = data.get("number")
+    mode = data.get("mode")
     answer = ''
     
     if num:
