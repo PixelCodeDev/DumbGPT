@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/bcc84433-710d-4a93-b40d-709bd6ddd8b2)
+![image](https://github.com/user-attachments/assets/8b23db1c-770d-4cb1-b582-f4f99de4b19b)
 
 # DumbGPT - The stupid AI chatbot (BY MIDDLE TEXT)
 
