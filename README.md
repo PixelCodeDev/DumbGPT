@@ -1,3 +1,5 @@
+![image](https://github.com/user-attachments/assets/bcc84433-710d-4a93-b40d-709bd6ddd8b2)
+
 # DumbGPT - The stupid AI chatbot (BY MIDDLE TEXT)
 
 DumbGPT is the ultimate AI chatbot that does everything *except* answer your questions correctly. Based on Google's Gemini, this AI takes absurdity to the next level with its chaotic answers. And if that's not enough, **Brainrot Mode** cranks up the nonsense to literal brain melting 💀. 
