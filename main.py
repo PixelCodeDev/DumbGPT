@@ -5,10 +5,14 @@ import google.generativeai as genai
 api_key = "AIzaSyCOQ7lBaZb5iV_Ycvil9xqQC26-Vb_KHmg"
 genai.configure(api_key=api_key)
 
-def GeminiChat(messages, temperature=0.7, max_tokens=250):
+msg_type = {
+    'dumb': "your the dumb AI, give off the weirdest answers to the questions, should probably be even unrelated to the question's topic, and be creative with it AND DONT MAKE THE ANSWERS LONG!!!",
+    'brainrot': "your the brainrot AI, talk only in brainrot using 2024-2025 tiktok/instagram brainrot words, try to make the answer somewhat short and less 'slay' and less words"
+}
+
+def gemini(messages, temperature=0.7, max_tokens=250):
     model = genai.GenerativeModel("gemini-1.5-pro")
 
-    # Convert message list to a single text input
     formatted_input = "\n".join([msg["content"] for msg in messages])
 
     response = model.generate_content(formatted_input)
@@ -36,9 +40,9 @@ def submit():
             answer = random.choice(empty_answers) 
         elif question:
             messages = [
-                {"content": f"You are now dumb Gemini, and you shall answer every single question with an unrelated response or with an unexpected answer, try to keep it conscise and just a bit related: {question}"}
+                {"content": f"{msg_type['dumb']}: {question}"}
             ]
-            answer = GeminiChat(messages)
+            answer = gemini(messages)
     
     print('Answer: ' + answer)
     return jsonify(success=True, answers=answer)

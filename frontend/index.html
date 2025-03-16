@@ -1,145 +1,180 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>DumbGPT</title>
-        <link rel="icon" type="image/x-icon" href="https://dumbgpt.netlify.app/assets/DumbGPT_icon.png">
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                background-color: #202123;
-                margin: 0;
-                padding: 0;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100vh;
-                color: #d1d5db;
-                font-size: 1.3em;
-            }
-            .chat-container {
-                width: 40%;
-                background-color: #343541;
-                padding: 26px;
-                border-radius: 13px;
-                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-                display: flex;
-                flex-direction: column;
-            }
-            .chat-box {
-                flex: 1;
-                background-color: #3A3B3C;
-                padding: 19px;
-                border-radius: 13px;
-                overflow-y: auto;
-                max-height: 300px;
-                font-size: 1.1em;
-                display: flex;
-                flex-direction: column;
-                scrollbar-width: thin;
-                scrollbar-color: #888 #3A3B3C;
-            }
-            .chat-box::-webkit-scrollbar {
-                width: 8px;
-            }
-            .chat-box::-webkit-scrollbar-thumb {
-                background: #888;
-                border-radius: 4px;
-            }
-            .chat-box::-webkit-scrollbar-thumb:hover {
-                background: #555;
-            }
-            .chat-box strong {
-                color: #ffffff;
-            }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DumbGPT</title>
+    <link rel="icon" type="image/x-icon" href="https://dumbgpt.netlify.app/assets/DumbGPT_ico.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+            font-size: 1.2em;
+        }
+
+        .title-container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .title-container img {
+            height: 250px;
+            width: auto;
+        }
+
+        .chat-container {
+            width: 90%;
+            max-width: 600px;
+            background-color: #f0f0f5;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-box {
+            flex: 1;
+            background-color: #ffffff;
+            padding: 15px;
+            border-radius: 10px;
+            overflow-y: auto;
+            max-height: 400px;
+            font-size: 1em;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #ddd;
+        }
+
+        .input-area {
+            display: flex;
+            gap: 10px;
+            padding-top: 12px;
+        }
+
+        input {
+            flex: 1;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            background-color: #ffffff;
+            color: #333;
+            font-size: 1em;
+            outline: none;
+        }
+
+        button {
+            padding: 12px 18px;
+            background-color: #0084ff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-size: 1em;
+        }
+
+        button:hover {
+            background-color: #0072e5;
+        }
+
+        .loading {
+            font-style: italic;
+            color: #666;
+        }
+
+        @media (max-width: 600px) {
             .input-area {
-                display: flex;
-                gap: 13px;
-                padding-top: 13px;
-            }
-            input {
-                flex: 1;
-                padding: 12px;
-                border-radius: 10px;
-                border: none;
-                background-color: #555761;
-                color: white;
-                font-size: 1.1em;
+                flex-direction: column;
             }
             button {
-                padding: 12px 20px;
-                background-color: #10A37F;
-                color: white;
-                border: none;
-                border-radius: 10px;
-                cursor: pointer;
-                transition: background 0.3s;
-                font-size: 1.1em;
+                width: 100%;
             }
-            button:hover {
-                background-color: #0e8f6c;
+            .title-container {
+                flex-direction: column;
+                text-align: center;
             }
-            .loading {
-                font-style: italic;
-                color: #cccccc;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="chat-container">
-            <div class="chat-box" id="chat-box"></div>
-            <div class="input-area">
-                <input type="text" id="question-input" placeholder="Ask DumbGPT...">
-                <button onclick="askQuestion()">Submit</button>
-            </div>
+        }
+    </style>
+</head>
+<body>
+
+    <div class="title-container">
+        <img src="https://dumbgpt.netlify.app/assets/DumbGPT_logo.png" alt="DumbGPT Logo" id="title_logo">
+        <img src="https://dumbgpt.netlify.app/assets/DumbGPT_ico.png" alt="DumbGPT Icon">
+    </div>
+
+    <div class="chat-container">
+        <div class="chat-box" id="chat-box"></div>
+        <div class="input-area">
+            <input type="text" id="question-input" placeholder="Ask DumbGPT..." onkeypress="handleKeyPress(event)">
+            <button onclick="askQuestion()">Submit</button>
         </div>
+    </div>
 
-        <script>
-            let questionNumber = 1;
-            const maxMessages = 50; // Limit chat messages but keep scroll functionality
+    <script>
+        let questionNumber = 1;
+        const maxMessages = 50;
 
-            function askQuestion() {
-                const questionInput = document.getElementById("question-input");
-                const chatBox = document.getElementById("chat-box");
-                const questionText = questionInput.value.trim();
-                
-                if (!questionText) return;
-                
-                chatBox.innerHTML += `<p><strong>You:</strong> ${questionText}</p>`;
-                chatBox.innerHTML += `<p id="loading-${questionNumber}" class="loading">DumbGPT is thinking...</p>`;
-                chatBox.scrollTop = chatBox.scrollHeight;
-                
-                fetch('/question', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ question: questionText, number: questionNumber })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    const randomDelay = Math.floor(Math.random() * (2500 - 1700) + 1700); // Random delay
+        function askQuestion() {
+            const questionInput = document.getElementById("question-input");
+            const chatBox = document.getElementById("chat-box");
+            const questionText = questionInput.value.trim();
+            
+            if (!questionText) return;
+            
+            chatBox.innerHTML += `<p><strong>You:</strong> ${questionText}</p>`;
+            chatBox.innerHTML += `<p id="loading-${questionNumber}" class="loading">DumbGPT is thinking...</p>`;
+            chatBox.scrollTop = chatBox.scrollHeight;
+            
+            fetch('/question', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ question: questionText, number: questionNumber })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const randomDelay = Math.floor(Math.random() * (2500 - 1700) + 1700);
 
-                    setTimeout(() => {
-                        document.getElementById(`loading-${questionNumber}`).remove();
-                        chatBox.innerHTML += `<p><strong>DumbGPT:</strong> ${data.answers}</p>`;
-                        chatBox.scrollTop = chatBox.scrollHeight;
-                        questionNumber++;
-
-                        // Keep chatbox messages within limit but allow scrolling
-                        while (chatBox.children.length > maxMessages) {
-                            chatBox.removeChild(chatBox.firstChild);
-                        }
-
-                    }, randomDelay);
-                })
-                .catch(error => {
+                setTimeout(() => {
                     document.getElementById(`loading-${questionNumber}`).remove();
-                    chatBox.innerHTML += `<p style="color: red;"><strong>Error:</strong> Failed to get response.</p>`;
-                    console.error('Error:', error);
-                });
-                
-                questionInput.value = "";
+                    chatBox.innerHTML += `<p><strong>DumbGPT:</strong> ${data.answers}</p>`;
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                    questionNumber++;
+
+                    while (chatBox.children.length > maxMessages) {
+                        chatBox.removeChild(chatBox.firstChild);
+                    }
+                }, randomDelay);
+            })
+            .catch(error => {
+                document.getElementById(`loading-${questionNumber}`).remove();
+                chatBox.innerHTML += `<p style="color: red;"><strong>Error:</strong> Failed to get response.</p>`;
+                console.error('Error:', error);
+            });
+            
+            questionInput.value = "";
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                askQuestion();
             }
-        </script>
-    </body>
+        }
+    </script>
+
+</body>
 </html>
