@@ -36,7 +36,7 @@ Run the project:
 ```
 Open the webpage
 ```
-type [1](http://127.0.0.1:5000/) on your browser of choice.
+type http://127.0.0.1:5000 (may vary depending on your flask configuration) on your browser of choice.
 ```
 
 ---
