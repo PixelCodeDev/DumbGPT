@@ -364,6 +364,9 @@
     </div>      
 
     <script>
+        const ad_vid = document.getElementById('brainrot-video');
+        ad_vid.pause()
+        
         document.addEventListener("DOMContentLoaded", function() {
             const greetings = [
                 "helo wat can i help u with. .. .",
@@ -424,7 +427,7 @@
                 lang_mode = 'brainrot';
 
                 if (hasBrainrotted === false) {
-                    menu_music.volume = 0.5;
+                    menu_music.volume = 0;
                     menu_music.loop = true;
                     menu_music.play();
 
@@ -463,7 +466,6 @@
     function showBrainrotOverlay() {
         const overlay = document.getElementById("brainrot-overlay");
         const skipButton = document.getElementById("skip-button");
-        const ad_vid = document.getElementById('brainrot-video');
 
         overlay.style.display = "flex";
         ad_vid.play()
@@ -545,12 +547,24 @@
                 clonedPopup.style.left = Math.random() * (window.innerWidth - 100) + "px";
                 clonedPopup.style.transform = `rotate(${Math.random() * 360}deg)`;
 
-                clonedPopup.querySelector("#popup-image").src = "http://dumbgpt.netlify.app/assets/brainrot/" + popupImages[Math.floor(Math.random() * popupImages.length)];
+                const popupImage = clonedPopup.querySelector("#popup-image");
+                popupImage.src = "http://dumbgpt.netlify.app/assets/brainrot/" + popupImages[Math.floor(Math.random() * popupImages.length)];
+
+                const audio = new Audio("https://cdn.freesound.org/previews/791/791346_16995461-lq.mp3");
+                audio.volume = 0.5;
+                audio.play();
+
+                popupImage.addEventListener("click", () => {
+                    clonedPopup.remove();
+                });
+
+                setTimeout(() => {
+                    clonedPopup.remove();
+                }, 3000);
 
                 document.body.appendChild(clonedPopup);
-
-                new Audio("https://cdn.freesound.org/previews/791/791346_16995461-lq.mp3").play();
             }
+
 
 
             function playRandomSound() {
@@ -558,8 +572,8 @@
                 // new Audio(brainrotSounds[Math.floor(Math.random() * brainrotSounds.length)]).play();
             }
 
-            popupInterval = setInterval(showPopup, Math.random() * (3000 - 1000) + 1000);
-            soundInterval = setInterval(playRandomSound, Math.random() * (8000 - 5000) + 5000);
+            popupInterval = setInterval(showPopup, Math.random() * (30000 - 10000) + 10000);
+            soundInterval = setInterval(playRandomSound, Math.random() * (80000 - 50000) + 50000);
         }
 
         function stopBrainrotEffects() {
