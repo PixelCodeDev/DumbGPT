@@ -38,7 +38,7 @@ def submit():
     fart = False
     
     if num:
-        if num % 5 == 0:
+        if num % 3 == 0:
             really_bro = random.choice([True, False])
 
             if really_bro == True:

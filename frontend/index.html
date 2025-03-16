@@ -35,6 +35,7 @@
             justify-content: center;
             align-items: center;
             width: 100%;
+            padding-bottom: 100px;
         }
 
         .chat-container {
@@ -120,6 +121,28 @@
                 text-align: center;
             }
         }
+
+        .video-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            width: 200px;
+            height: 100vh;
+        }
+        .left-video { left: 0; }
+        .right-video { right: 0; }
+
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border: 2px solid black;
+            display: none;
+        }
+
     </style>
 </head>
 <body>
@@ -143,22 +166,53 @@
             </div>
 
             <div class="mode-container" style="margin-top: 20px; display: flex; justify-content: center;">
-                <button onclick="toggleMode()" id="mode-toggle" style="background-color: green;">Brainrot Mode</button>
+                <button onclick="toggleMode()" id="mode-toggle" style="background-color: blue;">Normal Mode</button>
             </div>
         </div>
+    </div>
+    
+    <div class="video-container left-video"><video loop autoplay muted src="video1.mp4"></video></div>
+    <div class="video-container right-video"><video loop autoplay muted src="video2.mp4"></video></div>
+
+    <div class="popup" id="popup">
+        <img id="popup-image" src="" width="200">
     </div>
 
 
 
+
     <p class="disclaimer">
-        Never expect anything useful out of this AI's messages, he's really dumb.
+        Never expect anything useful out of this AI's messages, he's just    dumb.
     </p>
 
     <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const greetings = [
+                "helo wat can i help u with. .. .",
+                "yo wats up lol",
+                "bruh rly? ask something dumb",
+                "hmmm.... let me think...",
+                "wats poppin",
+                "oh no not u again",
+                "bro u expect an answer from me?",
+                "wait i forgor 💀",
+                "uhhhhhh idk",
+                "lemme cook 🍳",
+                "🧠 activate brainrot mode"
+            ];
+
+            const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
+            document.getElementById("greeting_text").textContent = randomGreeting;
+        });
+
         let questionNumber = 1;
         const maxMessages = 50;
 
-        let lang_mode = "brainrot";
+        const popupImages = ["image1.png", "image2.png", "image3.png"];
+        const brainrotSounds = ["sound1.mp3", "sound2.mp3", "sound3.mp3"];
+        let popupInterval, soundInterval;
+
+        let lang_mode = "normal";
 
         function toggleMode() {
             const modeButton = document.getElementById("mode-toggle");
@@ -171,10 +225,13 @@
         function askQuestion() {
             const questionInput = document.getElementById("question-input");
             const chatBox = document.getElementById("chat-box");
+            const greeting_text = document.getElementById("greeting_text");
             const questionText = questionInput.value.trim();
             
             if (!questionText) return;
             chatBox.style.display = "flex";
+            greeting_text.style.display = "none";
+
             
             chatBox.innerHTML += `<p><strong>You:</strong> ${questionText}</p>`;
             chatBox.innerHTML += `<p id="loading-${questionNumber}" class="loading">DumbGPT is thinking...</p>`;
@@ -188,17 +245,26 @@
             .then(response => response.json())
             .then(data => {
                 const randomDelay = Math.floor(Math.random() * (2500 - 1700) + 1700);
-
+                
                 setTimeout(() => {
                     document.getElementById(`loading-${questionNumber}`).remove();
                     chatBox.innerHTML += `<p><strong>DumbGPT:</strong> ${data.answers}</p>`;
                     chatBox.scrollTop = chatBox.scrollHeight;
                     questionNumber++;
 
+                    const fart_sound = new Audio("https://dumbgpt.netlify.app/assets/fart.mp3");
+                    fart_sound.play();
+
                     while (chatBox.children.length > maxMessages) {
                         chatBox.removeChild(chatBox.firstChild);
                     }
                 }, randomDelay);
+
+                if (lang_mode === 'brainrot') {
+                startBrainrotEffects();
+                } else {
+                    stopBrainrotEffects();
+                }
             })
             .catch(error => {
                 document.getElementById(`loading-${questionNumber}`).remove();
@@ -207,6 +273,33 @@
             });
             
             questionInput.value = "";
+        }
+
+        function startBrainrotEffects() {
+            function showPopup() {
+                if (!brainrotActive) return;
+                const popup = document.getElementById("popup");
+                popup.style.display = "block";
+                popup.style.top = Math.random() * (window.innerHeight - 100) + "px";
+                popup.style.left = Math.random() * (window.innerWidth - 100) + "px";
+                popup.style.transform = `rotate(${Math.random() * 360}deg)`;
+                document.getElementById("popup-image").src = popupImages[Math.floor(Math.random() * popupImages.length)];
+                new Audio("popup_sound.mp3").play();
+            }
+
+            function playRandomSound() {
+                if (!brainrotActive) return;
+                new Audio(brainrotSounds[Math.floor(Math.random() * brainrotSounds.length)]).play();
+            }
+
+            popupInterval = setInterval(showPopup, Math.random() * (3000 - 1000) + 1000);
+            soundInterval = setInterval(playRandomSound, Math.random() * (8000 - 5000) + 5000);
+        }
+
+        function stopBrainrotEffects() {
+            clearInterval(popupInterval);
+            clearInterval(soundInterval);
+            document.getElementById("popup").style.display = "none";
         }
 
         function handleKeyPress(event) {
