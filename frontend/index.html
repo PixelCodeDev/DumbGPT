@@ -417,7 +417,8 @@
                 lang_mode = 'brainrot';
 
                 if (hasBrainrotted === false) {
-                    let menu_music = new Audio('');
+                    let menu_music = new Audio("https://dumbgpt.netlify.app/assets/pop%20out.mp3");
+                    menu_music.loop = true
                     menu_music.play()
 
                     hasBrainrotted = true;
@@ -530,8 +531,8 @@
                 popup.style.top = Math.random() * (window.innerHeight - 100) + "px";
                 popup.style.left = Math.random() * (window.innerWidth - 100) + "px";
                 popup.style.transform = `rotate(${Math.random() * 360}deg)`;
-                document.getElementById("popup-image").src = popupImages[Math.floor(Math.random() * popupImages.length)];
-                new Audio("popup_sound.mp3").play();
+                document.getElementById("popup-image").src = "http://dumbgpt.netlify.app/assets/brainrot/"+popupImages[Math.floor(Math.random() * popupImages.length)];
+                new Audio("https://cdn.freesound.org/previews/791/791346_16995461-lq.mp3").play();
             }
 
             function playRandomSound() {
