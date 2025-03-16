@@ -12,7 +12,7 @@ DumbGPT is the ultimate AI chatbot that does everything *except* answer your que
 
 🧠 **Brainrot Mode** – Activating this mode will make DumbGPT generate responses with absolute brainrot energy.
 
-⚠️ **Brainrot Pop-ups** – Well not really we havent finished it 😢.
+⚠️ **Brainrot Pop-ups** – Brainrot to its peakest!
 
 🤖 **Gemini-Powered** – Built on Google's Gemini AI, but with a little twist 😉.
 
