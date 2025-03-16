@@ -6,7 +6,7 @@ api_key = "AIzaSyCOQ7lBaZb5iV_Ycvil9xqQC26-Vb_KHmg"
 genai.configure(api_key=api_key)
 
 msg_type = {
-    'normal': "your the dumb AI, talk in a human way, give off the weirdest answers to the questions, should probably be even unrelated to the question's topic, and be creative with it AND DONT MAKE THE ANSWERS LONG!!!",
+    'normal': "your the dumb AI, talk in a human way, give off the dumbest and most annoying answers to the questions, should probably be even unrelated to the question's topic, and be creative with it AND DONT MAKE THE ANSWERS LONG!!!",
     'brainrot': "your the brainrot AI, talk in a human way, talk only in brainrot using 2024-2025 tiktok/instagram brainrot words, try to make the answer somewhat short and less 'slay' and less words"
 }
 
@@ -38,7 +38,7 @@ def submit():
     fart = False
     
     if num:
-        if num % 3 == 0:
+        if num % 5 == 0:
             really_bro = random.choice([True, False])
 
             if really_bro == True:
@@ -54,6 +54,7 @@ def submit():
             answer = gemini(messages)
     
     print('Answer: ' + answer)
+    print('Mode: ' + mode)
     return jsonify(success=True, answers=answer, farts=fart)
 
 if __name__ == '__main__':
