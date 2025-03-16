@@ -56,6 +56,3 @@ def submit():
     print('Answer: ' + answer)
     print('Mode: ' + mode)
     return jsonify(success=True, answers=answer, farts=fart)
-
-if __name__ == '__main__':
-    app.run(debug=True)
