@@ -394,6 +394,9 @@
             "sound2.mp3", 
             "sound3.mp3"
         ];
+
+        let menu_music = new Audio("https://dumbgpt.netlify.app/assets/pop%20out.mp3");
+
         let popupInterval, soundInterval;
 
         let lang_mode = "normal";
@@ -421,7 +424,6 @@
                 lang_mode = 'brainrot';
 
                 if (hasBrainrotted === false) {
-                    let menu_music = new Audio("https://dumbgpt.netlify.app/assets/pop%20out.mp3");
                     menu_music.volume = 0.5;
                     menu_music.loop = true;
                     menu_music.play();
@@ -453,6 +455,8 @@
                 video.pause();
                 video.currentTime = 0;
             });
+
+            menu_music.pause();
         }
     }
 
