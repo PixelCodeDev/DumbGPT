@@ -388,8 +388,12 @@
 
         let hasBrainrotted = false;
 
-        const popupImages = ["image1.png", "image2.png", "image3.png"];
-        const brainrotSounds = ["sound1.mp3", "sound2.mp3", "sound3.mp3"];
+        const popupImages = ["1.jpg", "2.jpg", "3.jpg"];
+        const brainrotSounds = [
+            "sound1.mp3",
+            "sound2.mp3", 
+            "sound3.mp3"
+        ];
         let popupInterval, soundInterval;
 
         let lang_mode = "normal";
@@ -418,8 +422,9 @@
 
                 if (hasBrainrotted === false) {
                     let menu_music = new Audio("https://dumbgpt.netlify.app/assets/pop%20out.mp3");
-                    menu_music.loop = true
-                    menu_music.play()
+                    menu_music.volume = 0.5;
+                    menu_music.loop = true;
+                    menu_music.play();
 
                     hasBrainrotted = true;
                     showBrainrotOverlay();
@@ -465,6 +470,7 @@
 
         skipButton.addEventListener("click", () => {
             overlay.style.display = "none";
+            ad_vid.pause();
         });
     }
 
@@ -526,6 +532,7 @@
         function startBrainrotEffects() {
             function showPopup() {
                 if (lang_mode === "normal") return;
+                console.log('Popup opened!')
                 const popup = document.getElementById("popup");
                 popup.style.display = "block";
                 popup.style.top = Math.random() * (window.innerHeight - 100) + "px";
@@ -537,7 +544,7 @@
 
             function playRandomSound() {
                 if (lang_mode === "normal") return;
-                new Audio(brainrotSounds[Math.floor(Math.random() * brainrotSounds.length)]).play();
+                // new Audio(brainrotSounds[Math.floor(Math.random() * brainrotSounds.length)]).play();
             }
 
             popupInterval = setInterval(showPopup, Math.random() * (3000 - 1000) + 1000);
@@ -555,6 +562,17 @@
                 askQuestion();
             }
         }
+
+        function adjustVideoSize() {
+            const screenWidth = window.innerWidth;
+            const videoWidth = screenWidth * 0.2;
+
+            document.getElementById("rot-video-left").style.width = `${videoWidth}px`;
+            document.getElementById("rot-video-right").style.width = `${videoWidth}px`;
+        }
+
+        window.addEventListener("load", adjustVideoSize);
+        window.addEventListener("resize", adjustVideoSize);
     </script>
 
 </body>
