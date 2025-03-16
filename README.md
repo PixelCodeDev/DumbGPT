@@ -1,4 +1,4 @@
-# DumbGPT - The stupid AI chatbot
+# DumbGPT - The stupid AI chatbot (BY MIDDLE TEXT)
 
 DumbGPT is the ultimate AI chatbot that does everything *except* answer your questions correctly. Based on Google's Gemini, this AI takes absurdity to the next level with its chaotic answers. And if that's not enough, **Brainrot Mode** cranks up the nonsense to literal brain melting 💀. 
 
@@ -50,7 +50,7 @@ type http://127.0.0.1:5000 (may vary depending on your flask configuration) on y
 ---
 
 ## License 📜
-This project is open-source and available under the MIT License.
+This project is open-source, obviously.
 
 ---
 
